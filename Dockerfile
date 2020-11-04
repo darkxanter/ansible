@@ -1,3 +1,5 @@
-FROM ubuntu:20.04
+FROM alpine
 
-RUN apt-get update && apt-get install -y ansible rsync && rm -rf /var/lib/apt/lists/*
+RUN apk --no-cache add ansible && adduser -S ansible
+
+USER ansible
