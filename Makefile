@@ -1,12 +1,14 @@
-USER := $(shell whoami)
-GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')
-DOCKER_TAG := $(USER)/$(shell basename $(CURDIR)):$(GIT_BRANCH)
+# USER := $(shell whoami)
+IMAGE_NAME := xanter/ansible
+# GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')
+DOCKER_TAG := $(IMAGE_NAME):$(VERSION)
 
-.PHONY: build
+.PHONY: build build_force shell
+
 build:
-	docker build -t $(DOCKER_TAG) .
+#	docker build --pull-always --build-arg ANSIBLE_VERSION=$(VERSION) -t $(DOCKER_TAG) .
+	docker build --pull-always --build-arg ANSIBLE_VERSION=$(VERSION) -t $(DOCKER_TAG) .
 
-.PHONY: shell
 shell:
 	docker run --rm -it $(DOCKER_TAG) /bin/sh
 
