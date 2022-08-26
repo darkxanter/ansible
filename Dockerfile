@@ -12,7 +12,7 @@
 # USER ansible
 # WORKDIR /home/ansible
 
-FROM alpine:3.15
+FROM alpine:3.16
 
 # Ansible Community Package Release
 ARG ANSIBLE_VERSION 
@@ -54,3 +54,5 @@ RUN adduser -s /bin/bash -S ansible
 
 USER ansible
 WORKDIR /home/ansible
+
+CMD ["/bin/bash"]
