@@ -30,6 +30,7 @@ RUN apk --no-cache add \
         sshpass \
         openssh-client \
         rsync \
+        bash \
         moreutils && \
     apk --no-cache add --virtual build-dependencies \
         python3-dev \
@@ -49,7 +50,7 @@ RUN apk --no-cache add \
     rm -rf /var/cache/apk/* && \
     rm -rf /root/.cache
 
-RUN adduser -S ansible
+RUN adduser -s /bin/bash -S ansible
 
 USER ansible
 WORKDIR /home/ansible
