@@ -14,13 +14,8 @@
 
 FROM alpine:3.17
 
-# Ansible Community Package Release
-ARG ANSIBLE_VERSION 
-ENV ANSIBLE_VERSION $ANSIBLE_VERSION
-
 LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.version=$ANSIBLE_VERSION \
     org.label-schema.description="Ansible inside Docker"
 
 RUN apk --no-cache add \
@@ -31,6 +26,7 @@ RUN apk --no-cache add \
     openssh-client \
     rsync \
     bash \
+    curl \
     py3-jmespath \
     ansible-lint \
     ansible \
