@@ -12,7 +12,7 @@
 # USER ansible
 # WORKDIR /home/ansible
 
-FROM alpine:3.16
+FROM alpine:3.17
 
 # Ansible Community Package Release
 ARG ANSIBLE_VERSION 
@@ -24,35 +24,40 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.description="Ansible inside Docker"
 
 RUN apk --no-cache add \
-        python3 \
-        openssl \
-        ca-certificates \
-        sshpass \
-        openssh-client \
-        rsync \
-        bash \
-        moreutils && \
-    apk --no-cache add --virtual build-dependencies \
-        python3-dev \
-        libffi-dev \
-        musl-dev \
-        gcc \
-        py3-pip \
-        py3-wheel \
-        openssl-dev \
-        libressl-dev \
-        build-base && \
-    pip install --no-cache-dir --upgrade pip wheel && \
-    pip install --no-cache-dir --upgrade cryptography cffi && \
-    pip install --no-cache-dir ansible==${ANSIBLE_VERSION} && \
-    pip install --no-cache-dir ansible-lint jmespath && \
-    apk del build-dependencies && \
-    rm -rf /var/cache/apk/* && \
-    rm -rf /root/.cache
+    python3 \
+    openssl \
+    ca-certificates \
+    sshpass \
+    openssh-client \
+    rsync \
+    bash \
+    py3-jmespath \
+    ansible-lint \
+    ansible \
+    moreutils
 
-RUN adduser -s /bin/bash -S ansible
+# apk --no-cache add --virtual build-dependencies \
+# python3-dev \
+# libffi-dev \
+# musl-dev \
+# gcc \
+# py3-pip \
+# py3-wheel \
+# openssl-dev \
+# libressl-dev \
+# build-base && \
+# pip install --no-cache-dir --upgrade pip wheel && \
+# pip install --no-cache-dir --upgrade cryptography cffi && \
+# pip install --no-cache-dir ansible==${ANSIBLE_VERSION} && \
+# pip install --no-cache-dir ansible-lint jmespath && \
+# apk del build-dependencies && \
+# rm -rf /var/cache/apk/* && \
+# rm -rf /root/.cache
 
-USER ansible
-WORKDIR /home/ansible
+# RUN adduser -s /bin/bash -S ansible
+# USER ansible
+# WORKDIR /home/ansible
+
+WORKDIR /work
 
 CMD ["/bin/bash"]
